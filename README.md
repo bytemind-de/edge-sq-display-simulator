@@ -14,6 +14,11 @@ Check out how your web application REALLY looks like on modern smartphones! ;-)
 * Adjust colors as needed
 * Discover how your website/app looks like on a modern mobile phone display
 
+### Known issues
+
+* Since the child app (the app started via 'App URL') runs in an iframe of the parent page it might not look exactly like the mobile version. This depends on how the child app reacts to the browser 'User-Agent' and viewport scaling.
+* If you need to simulate a different 'User-Agent' e.g. of a mobile browser you can use this SEPIA open-source browser extension for Chrome: [SEPIA Framework Tools](https://github.com/SEPIA-Framework/sepia-browser-extensions)
+
 ## Screenshots
 
 <p align="center">
