@@ -17,19 +17,19 @@
 		scaleViewport();
 	</script>
 
-	<title>Edge-Sq</title>
-	<meta name="application-name" content="Edge-Sq"/>
-	<meta name="apple-mobile-web-app-title" content="Edge-Sq">
-	<meta name="description" content="Edge-Sq is a web based online simulator for mobile edge-to-edge displays with notch or any form of camera cutout. Check out how your web application will look on modern smartphones.">
+	<title>EdgeSquare</title>
+	<meta name="application-name" content="EdgeSquare"/>
+	<meta name="apple-mobile-web-app-title" content="EdgeSquare">
+	<meta name="description" content="Online simulator for edge-to-edge displays with notch or any form of camera cutout. Check out how your web application will look on modern smartphones.">
 	<meta name="theme-color" content="#000">
 	<link rel="icon" sizes="192x192" href="img/icon.png">
 	<link rel="apple-touch-icon" href="img/icon.png">
 	
 	<!-- open graph settings -->
-	<meta property="og:title" content="Edge-Sq"/>
+	<meta property="og:title" content="EdgeSquare"/>
 	<meta property="og:determiner" content="the" />
 	<meta property="og:url" content="http://bytemind.de/tools/edge-sq/"/>
-	<meta property="og:description" content="Edge-Sq is a web based online simulator for mobile edge-to-edge displays with notch or any form of camera cutout. Check out how your web application will look on modern smartphones.">
+	<meta property="og:description" content="Online simulator for edge-to-edge displays with notch or any form of camera cutout. Check out how your web application will look on modern smartphones.">
 	<meta property="og:image" content="http://bytemind.de/img/icon.png"/>
 	<meta property="og:image:width" content="192"/>
 	<meta property="og:image:height" content="192"/>
@@ -44,13 +44,14 @@
 	<link rel="stylesheet" href="css/googleMaterialIcons.css">
 </head>
 <style>
-.pickr {
+#controls .pickr {
 	border: 1px solid;
     border-radius: 4px;
 }
 .pickr button,
 .pcr-app button {
 	min-width: auto;
+	min-height: auto;
 }
 </style>
 <body >
@@ -111,7 +112,7 @@
 		</div>
 	</div>
 	<div id="controls">
-		<h3>Edge-Sq Display Simulator</h3>
+		<h3>Edge-2-Edge Display Simulator</h3>
 		<div>
 			<p>App URL</p>
 			<input id="app-url" type="url" spellcheck="false" placeholder="http://localhost:8080/index.html" onchange="EdgeSq.setAppUrl(this.value);">
@@ -134,9 +135,11 @@
 		</div>
 		<div>
 			<p>Toggles</p>
-			<label>Display state to:</label><button id="toggle-display" onclick="EdgeSq.toggleDisplayState();">Full</button>
+			<label>Display state:</label><button id="toggle-display" onclick="EdgeSq.toggleDisplayState();">Full</button>
 		</div>
-		<p><a href="https://github.com/bytemind-de/edge-sq-display-simulator" target=_blank><svg style="width: 209px;height: 27px;padding:5px 0;"><text x="0" y="90%" style="fill: url(#bytemind-color-gradient);">Open-source by bytemind.de</text></svg></a></p>
+		<p id="open-source-label">
+			<a href="https://github.com/bytemind-de/edge-sq-display-simulator" target=_blank><svg style="width: 209px;height: 27px;padding:5px 0;"><text x="0" y="90%" style="fill: url(#bytemind-color-gradient);">Open-source by bytemind.de</text></svg></a>
+		</p>
 	</div>
 	<script>
 		//Edge-Sq Setup
