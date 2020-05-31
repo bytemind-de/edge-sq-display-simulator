@@ -17,7 +17,7 @@ Check out how your web application REALLY looks like on modern smartphones! ;-)
 ## Screenshots
 
 <p align="center">
-  <img src="screenshots/edge-sq-sim.png" alt="EdgeSquare App"/>
+  <img src="screenshots/edge-sq-sim_2.png" alt="EdgeSquare using SEPIA App"/>
 </p>
 
 ## Licenses
