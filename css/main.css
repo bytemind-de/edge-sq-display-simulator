@@ -57,11 +57,11 @@ button {
 #controls {
 	position: relative;
 	width: calc(360px + 24px);
-	height: calc(712px + 24px);
+	height: calc(760px + 24px);
 	/*width: calc(var(--display-w) + 24px);*/
 	/*height: calc(var(--display-h) + 24px);*/
-	min-width: 360px;
-	min-height: 712px;
+	/*min-width: 360px;*/
+	/*min-height: 712px;*/
 	margin: 16px;
 	padding: 16px;
 	background: #000;
@@ -69,6 +69,15 @@ button {
 	border-radius: 42px;
 	text-align: center;
 	flex: 0 0 auto;
+	transition: all .5s;
+	overflow: hidden;
+}
+#controls.hidden {
+	opacity: 0;
+    width: 0;
+	height: 0;
+	padding: 0;
+	margin: 0;
 }
 #controls > div {
 	margin: 16px 0 16px 0;
@@ -104,6 +113,88 @@ button {
 	left: 0;
 }
 
+#overlay-area {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 60px;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+@media only screen and (max-width: 1080px) {
+	#overlay-area {
+		position: relative;
+		width: 100%;
+		height: 60px;
+		flex-direction: row;
+	}
+	.overlay-buttons {
+		flex-direction: row !important;
+	}
+}
+.overlay-buttons {
+	display: flex;
+    flex-direction: column;
+	flex-wrap: wrap;
+    align-items: center;
+}
+.overlay-buttons button {
+	width: 31px;
+    min-width: 28px;
+    height: 31px;
+    min-height: 28px;
+    padding: 0;
+    margin: 8px;
+    display: flex;
+}
+.overlay-buttons button img,
+.overlay-buttons button svg {
+	width: 100%;
+	padding: 2px;
+}
+.overlay-buttons .material-icons {
+	font-size: 31px;
+}
+#info-popup {
+	position: fixed;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(200, 200, 200, 0.95);
+	text-align: center;
+	transition: all 0.5s;
+	opacity: 0;
+}
+#info-popup.visible {
+	opacity: 1;
+}
+#info-popup-content {
+	position: relative;
+	display: inline-block;
+    background: #111;
+    color: #eee;
+    text-align: left;
+    padding: 32px;
+    max-width: 100%;
+    width: 500px;
+    margin: 12vh 0 0 0;
+    border-radius: 42px;
+    box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.75);
+}
+#info-popup-content a {
+	color: #44c8be;
+}
+#info-popup-close {
+	position: absolute;
+    right: 32px;
+    bottom: 32px;
+	cursor: pointer;
+}
+
 #display {
 	position: relative;
 	width: calc(var(--display-w) + 24px);
@@ -116,6 +207,7 @@ button {
 	border-radius: var(--display-rad);
 	overflow: hidden;
 	flex: 0 0 auto;
+	transition: all .5s;
 }
 #display.classic {
 	border-radius: 0px;
@@ -138,6 +230,7 @@ button {
 	top: 0;
 	left: 0;
 	background: transparent;
+	pointer-events: none;
 }
 #app {
 	border: 0;
@@ -181,6 +274,12 @@ button {
 	padding: 0px 0 0 0;
 	font-style: normal;
 }
+.notch-theme.thinner span {
+	font-size: 14px;
+}
+.notch-theme.thinner span .material-icons {
+	font-size: 16px;
+}
 .notch-theme.thin span {
 	font-size: 12px;
 }
@@ -198,6 +297,34 @@ button {
 	border-radius: 15px;
 	border: 7px solid #222;
 	flex: 0 0 auto;
+}
+.sb-camera-hole-2 {
+	position: relative;
+	width: 60px !important;
+	height: 30px !important;
+	background: #222;
+	border-radius: 15px;
+	flex: 0 0 auto;
+}
+.sb-camera-hole-2::before {
+	content: '';
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	top: 10px;
+	left: 10px;
+	background: #444;
+	border-radius: 5px;
+}
+.sb-camera-hole-2::after {
+	content: '';
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	top: 10px;
+	right: 10px;
+	background: #444;
+	border-radius: 5px;
 }
 .sb-iphone-x-array {
 	position: relative;
@@ -247,6 +374,14 @@ button {
 	align-items: center;
 	font-size: 20px;
 }
+.nb-recent {
+	width: 24px;
+	height: 24px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: 800;
+}
 .nb-home {
 	position: relative;
 	width: 24px;
@@ -275,11 +410,18 @@ button {
 	background: rgba(200, 200, 200, 0.5);
 	border-radius: 3px;
 }
-.nb-recent {
-	width: 24px;
-	height: 24px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-weight: 800;
+.nb-home-android-gesture {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	/* 24px heith*/
+}
+.nb-home-android-gesture > div {
+	position: absolute;
+	bottom: 7px;
+	left: calc(50% - 38px);
+	width: 76px;
+	height: 4px;
+	background: rgba(200, 200, 200, 0.5);
+	border-radius: 3px;
 }

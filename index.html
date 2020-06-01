@@ -5,14 +5,20 @@
 	<meta name="viewport" id="this-viewport" content="width=device-width, initial-scale=1, user-scalable=0">
 	<script>
 		function scaleViewport(refWidth, refHeight){
+			var clientWidth = document.documentElement.clientWidth;
 			if (!refWidth) refWidth = 500;
 			if (!refHeight) refHeight = 950;
 			var scaleFactor = Math.min(window.screen.width/refWidth, window.screen.height/refHeight);
 			if (scaleFactor < 1){
 				var mvp = document.getElementById('this-viewport');
 				mvp.setAttribute('content', 'width=device-width, initial-scale=' + scaleFactor + ', user-scalable=0');
+				if (clientWidth !== document.documentElement.clientWidth){
+					console.log("Screen scaling: " + scaleFactor);
+				}else{
+					mvp.setAttribute('content', 'width=device-width, initial-scale=1, user-scalable=0');
+				}
 			}
-			//window.matchMedia("(orientation: portrait)").matches
+			//if (window.matchMedia("(orientation: portrait)").matches)...
 		}
 		scaleViewport();
 	</script>
@@ -42,6 +48,18 @@
 	
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/googleMaterialIcons.css">
+	<script>
+		//Add svg-inject if not file origin
+		if (window.location.origin.indexOf("file://") != 0){
+			(function(){
+				var scr = document.createElement("script");
+				scr.src = "js/svg-inject.min.js";
+				document.head.appendChild(scr);
+			})();
+		}else{
+			window.SVGInject = function(){};
+		}
+	</script>
 </head>
 <style>
 #controls .pickr {
@@ -55,62 +73,21 @@
 }
 </style>
 <body >
-	<!-- Main -->
-	<div id="display">
-		<div id="status-bar">
-			<!-- Samsung S10e camera cutout -->
-			<div id="notch-samsung-s10e" class="notch-theme">
-				<span style="width: 20px;"></span>
-				<span class="sb-clock"><em>12:00</em></span>
-				<span class="sb-note"></span>
-				<span class="sb-email"></span>
-				<span class="sb-text"><em>...</em></span>
-				<span class="sb-filler"></span>
-				<span class="sb-bluetooth"></span>
-				<span class="sb-wifi"></span>
-				<span class="sb-cell-signal"></span>
-				<span class="sb-battery"><em>99%</em></span>
-				<span class="sb-camera-hole-1 notch-part"></span>
-				<span style="width: 20px;"></span>
-			</div>
-			<!-- iPhone X/XS/11 Pro notch -->
-			<div id="notch-iphone-x" class="notch-theme" style="display: none;">
-				<span class="sb-clock" style="width: 83px; text-align: center; flex: 0 0 auto;"><em>12:00</em></span>
-				<span class="sb-iphone-x-array notch-part"></span>
-				<span class="sb-cell-signal"></span>
-				<span class="sb-wifi"></span>
-				<span class="sb-battery" style="transform: rotate(90deg); height: 22px; width: 22px;"></span>
-				<span style="width: 17px;"></span>
-			</div>
-			<!-- iPhone 6 (probably 3-8) -->
-			<div id="notch-iphone-6" class="notch-theme thin" style="display: none;">
-				<span style="width: 0px;"></span>
-				<span class="sb-text"><em>••••• Provider 3G</em></span>
-				<span class="sb-clock" style="text-align: center; flex: 1 0 auto;"><em>12:00</em></span>
-				<span style="width: 34px;"></span>
-				<span class="sb-bluetooth"></span>
-				<span class="sb-wifi"></span>
-				<span class="sb-battery" style="transform: rotate(90deg); height: 22px; width: 22px;"></span>
-				<span style="width: 0px;"></span>
-			</div>
+	<!-- Overlays 1 -->
+	<div id="overlay-area">
+		<div class="overlay-buttons">
+			<button id="info-btn" title="Info" onclick="EdgeSq.toggleInfo();"><i class="material-icons">info</i></button>
+			<button id="ctrls-btn" title="Toggle settings" onclick="EdgeSq.toggleSettings();"><i class="material-icons">tune</i></button>
+			<button id="fullscreen-btn" title="Toggle fullscreen" onclick="EdgeSq.toggleFullScreen();"><i class="material-icons">fullscreen</i></button>
+			<!--<button id="fullscreen-exit-btn" onclick="EdgeSq.toggleFullScreen();" style="display: none;"><i class="material-icons">fullscreen_exit</i></button>-->
+			<button id="github-btn" title="Show on GitHub"><a href="https://github.com/bytemind-de/edge-sq-display-simulator"><img src="img/svg/github.svg"/></a></button>
 		</div>
-		<iframe id="app" src="index.html" title="Preview"></iframe>
-		<div id="nav-bar">
-			<!-- Default Android on-screen navigation bar -->
-			<div id="nav-android-1" class="nav-bar-theme">
-				<span class="nb-recent">|||</span>
-				<span class="nb-home"><div></div></span>
-				<span class="nb-back">◄</span>
-			</div>
-			<!-- Default iOS touch navigation bar -->
-			<div id="nav-ios-touch-1" class="nav-bar-theme" style="display: none;">
-				<span class="nb-home-ios"><div></div></span>
-			</div>
-			<!-- no navigation bar (hardware buttons) -->
-			<div id="nav-hardware" class="nav-bar-theme" style="display: none;">
-			</div>
-		</div>
+		<!--<div class="overlay-buttons">
+			<button id="twitter-btn"><img src="img/svg/twitter.svg" onload="SVGInject(this)"/></button>
+			<button id="sepia-btn"><img src="img/svg/sepia.svg" onload="SVGInject(this)"/></button>
+		</div>-->
 	</div>
+	<!-- CONTROLS -->
 	<div id="controls">
 		<h3>Edge-2-Edge Display Simulator</h3>
 		<div>
@@ -141,6 +118,118 @@
 			<a href="https://github.com/bytemind-de/edge-sq-display-simulator" target=_blank><svg style="width: 209px;height: 27px;padding:5px 0;"><text x="0" y="90%" style="fill: url(#bytemind-color-gradient);">Open-source by bytemind.de</text></svg></a>
 		</p>
 	</div>
+	<!-- SIM -->
+	<div id="display">
+		<!-- STATUS BARS / CUTOUTS / NOTCHES -->
+		<div id="status-bar">
+			<!-- Samsung S10/S10e camera cutout -->
+			<div id="notch-samsung-s10e" class="notch-theme">
+				<span style="width: 20px;"></span>
+				<span class="sb-clock"><em>12:00</em></span>
+				<span class="sb-note"></span>
+				<span class="sb-email"></span>
+				<span class="sb-text"><em>...</em></span>
+				<span class="sb-filler"></span>
+				<span class="sb-bluetooth"></span>
+				<span class="sb-wifi"></span>
+				<span class="sb-cell-signal"></span>
+				<span class="sb-battery"><em>99%</em></span>
+				<span class="sb-camera-hole-1 notch-part"></span>
+				<span style="width: 20px;"></span>
+			</div>
+			<!-- Samsung S10+ camera cutout -->
+			<div id="notch-samsung-s10p" class="notch-theme">
+				<span style="width: 20px;"></span>
+				<span class="sb-clock"><em>12:00</em></span>
+				<span class="sb-note"></span>
+				<span class="sb-email"></span>
+				<span class="sb-text"><em>...</em></span>
+				<span class="sb-filler"></span>
+				<span class="sb-bluetooth"></span>
+				<span class="sb-wifi"></span>
+				<span class="sb-cell-signal"></span>
+				<span class="sb-battery"><em>99%</em></span>
+				<span class="sb-camera-hole-2 notch-part"></span>
+				<span style="width: 20px;"></span>
+			</div>
+			<!-- Android 10 plain -->
+			<div id="notch-pixel-3" class="notch-theme thinner" style="display: none;">
+				<span style="width: 10px;"></span>
+				<span class="sb-clock"><em>12:00</em></span>
+				<span class="sb-filler"></span>
+				<span class="sb-wifi"></span>
+				<span class="sb-cell-signal"></span>
+				<span class="sb-battery"></span>
+				<span style="width: 10px;"></span>
+			</div>
+			<!-- iPhone X/XS/11 Pro notch -->
+			<div id="notch-iphone-x" class="notch-theme" style="display: none;">
+				<span class="sb-clock" style="width: 83px; text-align: center; flex: 0 0 auto;"><em>12:00</em></span>
+				<span class="sb-filler"></span>
+				<span class="sb-iphone-x-array notch-part"></span>
+				<span class="sb-filler"></span>
+				<span class="sb-cell-signal"></span>
+				<span class="sb-wifi"></span>
+				<span class="sb-battery" style="transform: rotate(90deg); height: 22px; width: 22px;"></span>
+				<span style="width: 17px;"></span>
+			</div>
+			<!-- iPhone 6 (probably 3-8) -->
+			<div id="notch-iphone-6" class="notch-theme thin" style="display: none;">
+				<span style="width: 0px;"></span>
+				<span class="sb-text"><em>••••• Provider 3G</em></span>
+				<span class="sb-clock" style="text-align: center; flex: 1 0 auto;"><em>12:00</em></span>
+				<span style="width: 34px;"></span>
+				<span class="sb-bluetooth"></span>
+				<span class="sb-wifi"></span>
+				<span class="sb-battery" style="transform: rotate(90deg); height: 22px; width: 22px;"></span>
+				<span style="width: 0px;"></span>
+			</div>
+		</div>
+		<!-- APP -->
+		<iframe id="app" src="index.html" title="Preview"></iframe>
+		<!-- NAVIGATION BARS -->
+		<div id="nav-bar">
+			<!-- Default Android on-screen navigation bar -->
+			<div id="nav-android-1" class="nav-bar-theme">
+				<span class="nb-recent">|||</span>
+				<span class="nb-home"><div></div></span>
+				<span class="nb-back">◄</span>
+			</div>
+			<!-- Android on-screen with gesture bar -->
+			<div id="nav-android-2" class="nav-bar-theme">
+				<span class="nb-home-android-gesture"><div></div></span>
+			</div>
+			<!-- Default iOS touch navigation bar -->
+			<div id="nav-ios-touch-1" class="nav-bar-theme" style="display: none;">
+				<span class="nb-home-ios"><div></div></span>
+			</div>
+			<!-- no navigation bar (hardware buttons) -->
+			<div id="nav-hardware" class="nav-bar-theme" style="display: none;">
+			</div>
+		</div>
+	</div>
+	<!-- Overlays 2 -->
+	<div id="info-popup" style="display: none;">
+		<div id="info-popup-content">
+			<h3>Welcome</h3>
+			<p>EdgeSquare is a web based online simulator for mobile edge-to-edge displays with notch or any other form of camera cutout.</p>
+			<h3>Getting started</h3>
+			<ul>
+				<li>Enter the URL of your web application or use the demo app</li>
+				<li>Choose a device from the selector</li>
+				<li>Adjust colors as needed</li>
+				<li>Discover how your website/app REALLY looks on modern mobile phone displays</li>
+			</ul>
+			<h3>Good to know</h3>
+			<ul>
+				<li>Devices are defined by their available pixels (viewport size) and <b>not</b> their physical size.</li>
+				<li>If your app/website/server uses the 'user-agent' of the browser to adjust the look (e.g. by loading a special version for mobile browsers) you need to work with browser extensions to simulate the correct behavior.</li>
+				<li>For more info or questions visit <a href="https://github.com/bytemind-de/edge-sq-display-simulator" target=_blank>the GitHub project page</a>.</li>
+			</ul>
+			<p>Have fun :-)</p>
+			<div id="info-popup-close">GO!</div>
+		</div>
+	</div>
 	<script>
 		//Edge-Sq Setup
 		(function(){
@@ -150,14 +239,26 @@
 			//DEVICES:
 			EdgeSq.devices = {
 				samsung_s10e: {
-					name: "Samsung S10e", 
-					displayHeight: "712px", displayWidth: "360px", displayRadius: "42px",
+					name: "Samsung S10/S10e", 
+					displayHeight: "760px", displayWidth: "360px", displayRadius: "42px",
 					statusBarHeight: "38px", navBarHeight: "48px", 
 					notch: "notch-samsung-s10e", navBar: "nav-android-1"
 				},
+				samsung_s10_plus: {
+					name: "Samsung S10+", 
+					displayHeight: "869px", displayWidth: "412px", displayRadius: "42px",
+					statusBarHeight: "38px", navBarHeight: "48px", 
+					notch: "notch-samsung-s10p", navBar: "nav-android-1"
+				},
 				iphone_x: {
-					name: "iPhone X", 
+					name: "iPhone X/11 Pro", 
 					displayHeight: "812px", displayWidth: "375px", displayRadius: "40px", 
+					statusBarHeight: "44px", navBarHeight: "34px", 
+					notch: "notch-iphone-x", navBar: "nav-ios-touch-1"
+				},
+				iphone_xr: {
+					name: "iPhone XS Max/XR/11", 
+					displayHeight: "896px", displayWidth: "414px", displayRadius: "40px", 
 					statusBarHeight: "44px", navBarHeight: "34px", 
 					notch: "notch-iphone-x", navBar: "nav-ios-touch-1"
 				},
@@ -168,10 +269,23 @@
 					notch: "notch-iphone-6", navBar: "nav-hardware"
 				},
 				iphone_6: {
-					name: "iPhone 6-8", 
+					name: "iPhone 6-8/SE 2020", 
 					displayHeight: "667px", displayWidth: "375px", displayRadius: "0px", 
 					statusBarHeight: "20px", navBarHeight: "0px", 
 					notch: "notch-iphone-6", navBar: "nav-hardware"
+				},
+				iphone_5: {
+					name: "iPhone 5", 
+					displayHeight: "568px", displayWidth: "320px", displayRadius: "0px", 
+					statusBarHeight: "20px", navBarHeight: "0px", 
+					notch: "notch-iphone-6", navBar: "nav-hardware"
+				},
+				google_pixel_3: {
+					name: "Google Pixel 3", 
+					//it seems users can change this in the settings: displayHeight: "824px", displayWidth: "412px", displayRadius: "30px",
+					displayHeight: "786px", displayWidth: "393px", displayRadius: "30px",
+					statusBarHeight: "28px", navBarHeight: "20px", 
+					notch: "notch-pixel-3", navBar: "nav-android-2"
 				}
 			}
 			var deviceSelector = document.getElementById('device-name');
@@ -298,6 +412,56 @@
 					}
 				}
 			}
+			EdgeSq.toggleInfo = function(){
+				clearTimeout(infoHideTimer);
+				var info = document.getElementById("info-popup");
+				if (info.classList.contains("visible")){
+					info.classList.remove("visible");
+					infoHideTimer = setTimeout(function(){
+						info.style.display = "none";
+					}, 500);
+				}else{
+					info.style.removeProperty("display");
+					setTimeout(function(){
+						info.classList.add("visible");
+					}, 0);
+				}
+			}
+			document.getElementById("info-popup").addEventListener("click", function(e){
+				e = window.event || e; 
+				if(this === e.target){
+					EdgeSq.toggleInfo();
+				}
+			});
+			document.getElementById("info-popup-close").addEventListener("click", function(e){
+				EdgeSq.toggleInfo();
+			});
+			EdgeSq.toggleFullScreen = function(){
+				if (!document.fullscreenElement){
+					document.documentElement.requestFullscreen();
+				}else{
+					if (document.exitFullscreen){
+						document.exitFullscreen(); 
+					}
+				}
+			}
+			EdgeSq.toggleSettings = function(){
+				clearTimeout(settingsHideTimer);
+				var ctrls = document.getElementById("controls");
+				if (ctrls.classList.contains("hidden")){
+					ctrls.style.removeProperty("display");
+					setTimeout(function(){
+						ctrls.classList.remove("hidden");
+					}, 0);
+				}else{
+					ctrls.classList.add("hidden");
+					settingsHideTimer = setTimeout(function(){
+						ctrls.style.display = "none";
+					}, 500);
+				}
+			}
+			var infoHideTimer;
+			var settingsHideTimer;
 			
 			//initialize
 			
@@ -307,7 +471,12 @@
 			EdgeSq.setStatusBarColor(EdgeSq.activeSbColor);
 			EdgeSq.setNavBarBackground(EdgeSq.activeNavBackground);
 			EdgeSq.setNavBarColor(EdgeSq.activeNavColor);
-
+			
+			EdgeSq.userHasSeenInfo = localStorage.getItem('edge-sq-has-seen-info');
+			if (!EdgeSq.userHasSeenInfo){
+				EdgeSq.toggleInfo();
+				localStorage.setItem('edge-sq-has-seen-info', true);
+			}
 		})();
 	</script>
 	<!-- low prio style sheets and js -->
@@ -331,7 +500,7 @@
 						cmyk: false,
 						input: true,
 						clear: false,
-						save: false,
+						save: true,
 						cancel: false
 					}
 				}
@@ -357,6 +526,9 @@
 					})
 					.on('change', function(color, instance){
 						ctrlData.fun(color.toHEXA().toString());
+					})
+					.on('save', function(color, instance){
+						instance.hide();
 					})
 				;
 			});
