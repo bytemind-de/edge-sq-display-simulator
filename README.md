@@ -8,7 +8,7 @@ Check out how your web application REALLY looks on modern smartphones! ;-)
   
 ## Getting started
 
-* Host the website on your server or simply go to: http://bytemind.de/tools/edge-sq/
+* Host the website on your server or simply go to: https://byteteilchen.de/edge-2-edge/
 * Enter the URL of your web application (or play around with the [SEPIA Open Assistant](https://sepia-framework.github.io/) demo, another great open-source project ^^)
 * Choose a device from the selector
 * Adjust colors as needed
@@ -24,7 +24,7 @@ Check out how your web application REALLY looks on modern smartphones! ;-)
 ## Screenshots
 
 <p align="center">
-  <img src="screenshots/edge-sq-sim_2.png" alt="EdgeSquare using SEPIA App"/>
+  <img src="screenshots/edge-sq-sim_3.png" alt="EdgeSquare using SEPIA App"/>
 </p>
 
 ## Licenses
