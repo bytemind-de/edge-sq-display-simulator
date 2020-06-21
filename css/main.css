@@ -35,7 +35,7 @@ body {
 input, select {
 	min-height: 28px;
 	border: 0;
-	padding: 4px 8px;
+	padding: 5px 8px;
 }
 select {
 	border-radius: 4px;
@@ -150,6 +150,9 @@ button {
     margin: 8px;
     display: flex;
 }
+.overlay-buttons button > a {
+	width: 100%;
+}
 .overlay-buttons button img,
 .overlay-buttons button svg {
 	width: 100%;
@@ -179,7 +182,7 @@ button {
     color: #eee;
     text-align: left;
     padding: 32px;
-    max-width: 100%;
+    max-width: 90%;
     width: 500px;
     margin: 12vh 0 0 0;
     border-radius: 42px;
@@ -248,6 +251,25 @@ button {
 #display.classic #nav-bar,
 #display.fullscreen #nav-bar {
 	display: none;
+}
+
+#device-scale-factor {
+	width: 50px;
+	text-align: center;
+	height: 26px;
+	min-height: auto;
+	margin: 0 4px;
+	background: transparent;
+	color: #eee;
+	border: 1px solid;
+	border-radius: 4px;
+	transition: all 0.3s;
+}
+#device-scale-factor.hidden {
+	padding: 0;
+    border: 0;
+    width: 0;
+    margin: 0;
 }
 
 .notch-theme {

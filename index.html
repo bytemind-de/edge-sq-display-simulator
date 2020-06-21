@@ -64,12 +64,26 @@
 <style>
 #controls .pickr {
 	border: 1px solid;
-    border-radius: 4px;
+    border-radius: 17px;
+	padding: 2px;
+	width: 27px;
+    height: 27px;
+	overflow: hidden;
+	display: flex;
+}
+.pickr .pcr-button::before,
+.pickr .pcr-button::after {
+	border-radius: 15px !important;
 }
 .pickr button,
 .pcr-app button {
 	min-width: auto;
 	min-height: auto;
+	height: 100% !important;
+    width: 100% !important;
+}
+.pickr button:focus {
+	box-shadow: none !important;
 }
 </style>
 <body >
@@ -112,7 +126,12 @@
 		</div>
 		<div>
 			<p>Toggles</p>
-			<label>Display state:</label><button id="toggle-display" onclick="EdgeSq.toggleDisplayState();">Full</button>
+			<div style="margin: 12px;">
+				<label>Display state:</label><button id="toggle-display" onclick="EdgeSq.toggleDisplayState();">Full</button>
+			</div>
+			<div style="margin: 12px;">
+				<label>Device scale:</label><button id="toggle-scale" onclick="EdgeSq.toggleDeviceScale();">Viewport</button><input id="device-scale-factor" value=0.6 onchange="EdgeSq.setDeviceScalingFactor(this.value);">
+			</div>
 		</div>
 		<p id="open-source-label">
 			<a href="https://github.com/bytemind-de/edge-sq-display-simulator" target=_blank><svg style="width: 209px;height: 27px;padding:5px 0;"><text x="0" y="90%" style="fill: url(#bytemind-color-gradient);">Open-source by bytemind.de</text></svg></a>
@@ -222,7 +241,7 @@
 			</ul>
 			<h3>Good to know</h3>
 			<ul>
-				<li>Devices are defined by their available pixels (viewport size) and <b>not</b> their physical size.</li>
+				<li>Devices are defined by their available pixels (viewport size) and <b>not</b> their physical size. You can use the 'Device scale' toggle to get the approximate real size.</li>
 				<li>If your app/website/server uses the 'user-agent' of the browser to adjust the look (e.g. by loading a special version for mobile browsers) you need to work with browser extensions to simulate the correct behavior.</li>
 				<li>For more info or questions visit <a href="https://github.com/bytemind-de/edge-sq-display-simulator" target=_blank>the GitHub project page</a>.</li>
 			</ul>
@@ -242,58 +261,70 @@
 					name: "Samsung S10/S10e", 
 					displayHeight: "760px", displayWidth: "360px", displayRadius: "42px",
 					statusBarHeight: "38px", navBarHeight: "48px", 
-					notch: "notch-samsung-s10e", navBar: "nav-android-1"
+					notch: "notch-samsung-s10e", navBar: "nav-android-1",
+					physWidth: [70]
 				},
 				samsung_s10_plus: {
 					name: "Samsung S10+", 
 					displayHeight: "869px", displayWidth: "412px", displayRadius: "42px",
 					statusBarHeight: "38px", navBarHeight: "48px", 
-					notch: "notch-samsung-s10p", navBar: "nav-android-1"
+					notch: "notch-samsung-s10p", navBar: "nav-android-1",
+					physWidth: [74]
 				},
 				iphone_x: {
 					name: "iPhone X/11 Pro", 
 					displayHeight: "812px", displayWidth: "375px", displayRadius: "40px", 
 					statusBarHeight: "44px", navBarHeight: "34px", 
-					notch: "notch-iphone-x", navBar: "nav-ios-touch-1"
+					notch: "notch-iphone-x", navBar: "nav-ios-touch-1",
+					physWidth: [71]
 				},
 				iphone_xr: {
-					name: "iPhone XS Max/XR/11", 
+					name: "iPhone XR/11/XS Max", 
 					displayHeight: "896px", displayWidth: "414px", displayRadius: "40px", 
 					statusBarHeight: "44px", navBarHeight: "34px", 
-					notch: "notch-iphone-x", navBar: "nav-ios-touch-1"
+					notch: "notch-iphone-x", navBar: "nav-ios-touch-1",
+					physWidth: [76]
 				},
 				iphone_6_plus: {
 					name: "iPhone 6-8 Plus", 
 					displayHeight: "736px", displayWidth: "414px", displayRadius: "0px", 
 					statusBarHeight: "20px", navBarHeight: "0px", 
-					notch: "notch-iphone-6", navBar: "nav-hardware"
+					notch: "notch-iphone-6", navBar: "nav-hardware",
+					physWidth: [78]
 				},
 				iphone_6: {
 					name: "iPhone 6-8/SE 2020", 
 					displayHeight: "667px", displayWidth: "375px", displayRadius: "0px", 
 					statusBarHeight: "20px", navBarHeight: "0px", 
-					notch: "notch-iphone-6", navBar: "nav-hardware"
+					notch: "notch-iphone-6", navBar: "nav-hardware",
+					physWidth: [67]
 				},
 				iphone_5: {
 					name: "iPhone 5", 
 					displayHeight: "568px", displayWidth: "320px", displayRadius: "0px", 
 					statusBarHeight: "20px", navBarHeight: "0px", 
-					notch: "notch-iphone-6", navBar: "nav-hardware"
+					notch: "notch-iphone-6", navBar: "nav-hardware",
+					physWidth: [59]
 				},
 				google_pixel_3: {
 					name: "Google Pixel 3", 
 					//it seems users can change this in the settings: displayHeight: "824px", displayWidth: "412px", displayRadius: "30px",
 					displayHeight: "786px", displayWidth: "393px", displayRadius: "30px",
 					statusBarHeight: "28px", navBarHeight: "20px", 
-					notch: "notch-pixel-3", navBar: "nav-android-2"
+					notch: "notch-pixel-3", navBar: "nav-android-2",
+					physWidth: [69]
 				}
 			}
+			var referencePhysWidth = 67;
+			var referenceDisplayWidth = 375;
 			var deviceSelector = document.getElementById('device-name');
 			deviceSelector.innerHTML = "";
 			Object.keys(EdgeSq.devices).forEach(function(key){
 				deviceSelector.innerHTML += "<option value='" + key + "'>" + EdgeSq.devices[key].name + "</option>";
 			});
 			EdgeSq.activeDevice = localStorage.getItem('edge-sq-device') || "samsung_s10e";
+			EdgeSq.scale = localStorage.getItem('edge-sq-scale') || "viewport";
+			EdgeSq.deviceScalingFactor = localStorage.getItem('edge-sq-scale-factor') || 0.6;
 			
 			//DOM
 			//TODO: make hard-coded IDs configurable
@@ -362,6 +393,8 @@
 				}
 				document.getElementById(deviceData.navBar).style.removeProperty("display");
 				localStorage.setItem('edge-sq-device', deviceId);
+				EdgeSq.activeDevice = deviceId;
+				refreshDeviceScale();
 			}
 			
 			EdgeSq.toggleDisplayState = function(){
@@ -400,6 +433,45 @@
 						icons[j].style.removeProperty("visibility");
 					}
 				}
+			}
+			
+			EdgeSq.setDeviceScalingFactor = function(newFactor){
+				EdgeSq.deviceScalingFactor = newFactor;
+				localStorage.setItem('edge-sq-scale-factor', newFactor);
+				refreshDeviceScale();
+			}
+			EdgeSq.toggleDeviceScale = function(){
+				if (EdgeSq.scale == "viewport"){
+					EdgeSq.scale = "physical";
+				}else{
+					EdgeSq.scale = "viewport";
+				}
+				localStorage.setItem('edge-sq-scale', EdgeSq.scale);
+				refreshDeviceScale();
+			}
+			function refreshDeviceScale(){
+				var display = document.getElementById("display");
+				var btn = document.getElementById("toggle-scale");
+				var dsIn = document.getElementById("device-scale-factor");
+				if (EdgeSq.scale == "viewport"){
+					btn.innerHTML = "Viewport";
+					dsIn.classList.add("hidden");
+					display.style.removeProperty("transform");
+				}else{
+					btn.innerHTML = "Real";
+					dsIn.classList.remove("hidden");
+					var d = EdgeSq.devices[EdgeSq.activeDevice];
+					if (d.physWidth){
+						var physWidth = d.physWidth[0];
+						var widthPx = Number.parseInt(d.displayWidth);
+						var factorPx = Math.round((referenceDisplayWidth / widthPx)*1000)/1000;
+						var factorReal = Math.round((physWidth / referencePhysWidth)*1000)/1000;
+						display.style.transform = "scale(" + (factorPx * factorReal * EdgeSq.deviceScalingFactor) + ")";
+					}else{
+						display.style.transform = "scale(" + (EdgeSq.deviceScalingFactor) + ")";
+					}
+				}
+				dsIn.value = EdgeSq.deviceScalingFactor;
 			}
 			
 			//helpers
@@ -449,10 +521,12 @@
 				clearTimeout(settingsHideTimer);
 				var ctrls = document.getElementById("controls");
 				if (ctrls.classList.contains("hidden")){
-					ctrls.style.removeProperty("display");
+					setTimeout(function(){
+						ctrls.style.removeProperty("display");
+					}, 0);
 					setTimeout(function(){
 						ctrls.classList.remove("hidden");
-					}, 0);
+					}, 25);
 				}else{
 					ctrls.classList.add("hidden");
 					settingsHideTimer = setTimeout(function(){
