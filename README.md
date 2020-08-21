@@ -18,7 +18,7 @@ Check out how your web application REALLY looks on modern smartphones! ;-)
 
 * Since the devices are defined by their viewport size and **not their physical size** some might appear bigger than others or identical in size when they are actually smaller (or vice versa). Nevertheless this **DOES** represent the space a website or app will have on a specific device! Use the 'Device scale' toggle and scaling factor to get the approx. real size of a device.
 * The child app (the app started via 'App URL') runs in an iframe of the parent page and therefore it might not look exactly like the mobile version. This depends on how the child app reacts to the browser 'User-Agent' and viewport scaling.
-* If you need to simulate a different 'User-Agent' e.g. of a mobile browser you can use this SEPIA open-source browser extension for Chrome: [SEPIA Framework Tools](https://github.com/SEPIA-Framework/sepia-browser-extensions)
+* If you need to simulate a different 'User-Agent' e.g. of a mobile browser you can use this SEPIA open-source browser extension for Chrome: [SEPIA Framework Tools](https://github.com/SEPIA-Framework/sepia-browser-extensions) or the developer tools of your browser ;-)
 * HTML meta property 'theme-color' is ignored (in general data from inside the iframe is not handed over to the parent).
 
 ## Screenshots
