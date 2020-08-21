@@ -181,6 +181,21 @@
 				<span class="sb-battery"></span>
 				<span style="width: 10px;"></span>
 			</div>
+			<!-- Pixel 4a (basically mirrored S10e) camera cutout -->
+			<div id="notch-pixel-4a" class="notch-theme">
+				<span style="width: 20px;"></span>
+				<span class="sb-camera-hole-1 notch-part"></span>
+				<span class="sb-clock"><em>12:00</em></span>
+				<span class="sb-email"></span>
+				<span class="sb-filler"></span>
+				<span class="sb-note"></span>
+				<span class="sb-text"><em>...</em></span>
+				<span class="sb-bluetooth"></span>
+				<span class="sb-wifi"></span>
+				<span class="sb-cell-signal"></span>
+				<span class="sb-battery"><em>99%</em></span>
+				<span style="width: 20px;"></span>
+			</div>
 			<!-- iPhone X/XS/11 Pro notch -->
 			<div id="notch-iphone-x" class="notch-theme" style="display: none;">
 				<span class="sb-clock" style="width: 83px; text-align: center; flex: 0 0 auto;"><em>12:00</em></span>
@@ -202,6 +217,17 @@
 				<span class="sb-wifi"></span>
 				<span class="sb-battery" style="transform: rotate(90deg); height: 22px; width: 22px;"></span>
 				<span style="width: 0px;"></span>
+			</div>
+			<!-- iPhone 12 Pro notch (leak) -->
+			<div id="notch-iphone-12-leak" class="notch-theme" style="display: none;">
+				<span class="sb-clock" style="width: 83px; text-align: center; flex: 0 0 auto;"><em>12:00</em></span>
+				<span class="sb-filler"></span>
+				<span class="sb-iphone-12-leak-array notch-part"></span>
+				<span class="sb-filler"></span>
+				<span class="sb-cell-signal"></span>
+				<span class="sb-wifi"></span>
+				<span class="sb-battery" style="transform: rotate(90deg); height: 22px; width: 22px;"></span>
+				<span style="width: 17px;"></span>
 			</div>
 		</div>
 		<!-- APP -->
@@ -273,15 +299,15 @@
 				},
 				iphone_x: {
 					name: "iPhone X/11 Pro", 
-					displayHeight: "812px", displayWidth: "375px", displayRadius: "40px", 
-					statusBarHeight: "44px", navBarHeight: "34px", 
+					displayHeight: "812px", displayWidth: "375px", displayRadius: "42px", 
+					statusBarHeight: "42px", navBarHeight: "34px", 
 					notch: "notch-iphone-x", navBar: "nav-ios-touch-1",
 					physWidth: [71]
 				},
 				iphone_xr: {
 					name: "iPhone XR/11/XS Max", 
-					displayHeight: "896px", displayWidth: "414px", displayRadius: "40px", 
-					statusBarHeight: "44px", navBarHeight: "34px", 
+					displayHeight: "896px", displayWidth: "414px", displayRadius: "42px", 
+					statusBarHeight: "42px", navBarHeight: "34px", 
 					notch: "notch-iphone-x", navBar: "nav-ios-touch-1",
 					physWidth: [76]
 				},
@@ -313,6 +339,20 @@
 					statusBarHeight: "28px", navBarHeight: "20px", 
 					notch: "notch-pixel-3", navBar: "nav-android-2",
 					physWidth: [69]
+				},
+				google_pixel_4a: {
+					name: "Google Pixel 4a",
+					displayHeight: "891px", displayWidth: "411px", displayRadius: "42px",
+					statusBarHeight: "38px", navBarHeight: "20px",
+					notch: "notch-pixel-4a", navBar: "nav-android-2",
+					physWidth: [69]
+				},
+				leak_iphone_12_pro: {
+					name: "iPhone 12 Pro (leak)",
+					displayHeight: "844px", displayWidth: "390px", displayRadius: "42px", 
+					statusBarHeight: "34px", navBarHeight: "34px", 
+					notch: "notch-iphone-12-leak", navBar: "nav-ios-touch-1",
+					physWidth: [73]
 				}
 			}
 			var referencePhysWidth = 67;

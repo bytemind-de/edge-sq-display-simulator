@@ -378,6 +378,37 @@ button {
 	border-radius: 10px;
 	border: 4px solid #222;
 }
+.sb-iphone-12-leak-array {
+	position: relative;
+	width: 135px;
+	height: 27px !important;
+	background: #000;
+	align-self: start;
+	border-radius: 0 0 15px 15px;
+	flex: 0 0 auto;
+}
+.sb-iphone-12-leak-array::before {
+	content: '';
+	position: absolute;
+	width: 9px;
+	height: 9px;
+	top: 4px;
+	left: 8px;
+	background: #242424;
+    border-radius: 10px;
+    border: 4px solid #181818;
+}
+.sb-iphone-12-leak-array::after {
+	content: '';
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    top: 4px;
+    left: 75px;
+    background: #242424;
+    border-radius: 10px;
+    border: 4px solid #181818;
+}
 
 .nav-bar-theme {
 	display: flex;
