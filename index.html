@@ -17,10 +17,13 @@
 				}else{
 					mvp.setAttribute('content', 'width=device-width, initial-scale=1, user-scalable=0');
 				}
+			}else{
+				scaleFactor = 1;
 			}
 			//if (window.matchMedia("(orientation: portrait)").matches)...
+			return scaleFactor;
 		}
-		scaleViewport();
+		window.edgeSqViewportScale = scaleViewport();
 	</script>
 
 	<title>EdgeSquare</title>
@@ -271,7 +274,11 @@
 				<li>If your app/website/server uses the 'user-agent' of the browser to adjust the look (e.g. by loading a special version for mobile browsers) you need to work with browser extensions to simulate the correct behavior.</li>
 				<li>For more info or questions visit <a href="https://github.com/bytemind-de/edge-sq-display-simulator" target=_blank>the GitHub project page</a>.</li>
 			</ul>
-			<p>Have fun :-)</p>
+			<h3>My display</h3>
+			<ul id="own-viewport-info"></ul>
+			<br>
+			<p style="text-align: center;">Have fun :-)</p>
+			<br>
 			<div id="info-popup-close">GO!</div>
 		</div>
 	</div>
@@ -536,6 +543,12 @@
 					info.style.removeProperty("display");
 					setTimeout(function(){
 						info.classList.add("visible");
+						//calculate own viewport
+						var ownVpInfo = document.getElementById("own-viewport-info");
+						ownVpInfo.innerHTML = "";
+						ownVpInfo.innerHTML += ("<li>Own viewport scale: " + window.edgeSqViewportScale + "</li>");
+						ownVpInfo.innerHTML += ("<li>Viewport width: " + Math.round(window.innerWidth * window.edgeSqViewportScale) + "</li>");
+						ownVpInfo.innerHTML += ("<li>Viewport height: " + Math.round(window.innerHeight * window.edgeSqViewportScale) + "</li>");
 					}, 0);
 				}
 			}
