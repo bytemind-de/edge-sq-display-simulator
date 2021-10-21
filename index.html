@@ -221,11 +221,11 @@
 				<span class="sb-battery" style="transform: rotate(90deg); height: 22px; width: 22px;"></span>
 				<span style="width: 0px;"></span>
 			</div>
-			<!-- iPhone 12 Pro notch (leak) -->
-			<div id="notch-iphone-12-leak" class="notch-theme" style="display: none;">
+			<!-- iPhone 13 Pro notch -->
+			<div id="notch-iphone-13" class="notch-theme" style="display: none;">
 				<span class="sb-clock" style="width: 83px; text-align: center; flex: 0 0 auto;"><em>12:00</em></span>
 				<span class="sb-filler"></span>
-				<span class="sb-iphone-12-leak-array notch-part"></span>
+				<span class="sb-iphone-13-array notch-part"></span>
 				<span class="sb-filler"></span>
 				<span class="sb-cell-signal"></span>
 				<span class="sb-wifi"></span>
@@ -304,6 +304,13 @@
 					notch: "notch-samsung-s10p", navBar: "nav-android-1",
 					physWidth: [74]
 				},
+				iphone_13_pro: {
+					name: "iPhone 13 Pro",
+					displayHeight: "844px", displayWidth: "390px", displayRadius: "42px", 
+					statusBarHeight: "34px", navBarHeight: "34px", 
+					notch: "notch-iphone-13", navBar: "nav-ios-touch-1",
+					physWidth: [72]
+				},
 				iphone_x: {
 					name: "iPhone X/11 Pro", 
 					displayHeight: "812px", displayWidth: "375px", displayRadius: "42px", 
@@ -354,12 +361,12 @@
 					notch: "notch-pixel-4a", navBar: "nav-android-2",
 					physWidth: [69]
 				},
-				leak_iphone_12_pro: {
-					name: "iPhone 12 Pro (leak)",
-					displayHeight: "844px", displayWidth: "390px", displayRadius: "42px", 
-					statusBarHeight: "34px", navBarHeight: "34px", 
-					notch: "notch-iphone-12-leak", navBar: "nav-ios-touch-1",
-					physWidth: [73]
+				android_tablet_landscape: {
+					name: "Android Tablet (landscape)", 
+					displayHeight: "768px", displayWidth: "1024px", displayRadius: "42px",
+					statusBarHeight: "38px", navBarHeight: "48px", 
+					notch: "notch-samsung-s10e", navBar: "nav-android-1",
+					physWidth: [245]
 				}
 			}
 			var referencePhysWidth = 67;
